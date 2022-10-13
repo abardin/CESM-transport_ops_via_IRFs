@@ -1,0 +1,107 @@
+#  An integer [1,9] in the first column identifies the field's output stream number. 
+#  To deactivate a field, replace the output stream number with  # or ! 
+#  Each stream must have at least 1 entry even if the frequency is never.
+2  QFLUX
+3  BSF
+3  TFW_T
+3  TFW_S
+3  RESID_T
+3  RESID_S
+3  QSW_HTP
+3  QSW_HBL
+3  SHF
+1  SHF_QSW
+3  SFWF
+3  PREC_F
+3  SNOW_F
+3  EVAP_F
+3  MELT_F
+3  ROFF_F
+3  IOFF_F
+3  SALT_F
+3  SENH_F
+4  LWUP_F
+5  LWDN_F
+3  MELTH_F
+3  IFRAC
+1  SSH
+3  TAUX
+3  TAUY
+3  SU
+3  SV
+1  HMXL
+3  HMXL_2
+3  HMXL_DR
+3  XMXL
+3  XMXL_2
+3  TMXL
+3  HBLT
+3  XBLT
+3  TBLT
+3  FW
+3  ADVT
+3  ADVS
+3  HDIFT
+3  HDIFS
+3  UVEL
+3  VVEL
+3  WVEL
+1  TEMP
+3  TEND_TEMP
+3  ADV_3D_TEMP
+3  DIA_IMPVF_TEMP
+3  dTEMP_POS_2D
+3  dTEMP_NEG_2D
+1  SALT
+3  TEND_SALT
+3  ADV_3D_SALT
+3  DIA_IMPVF_SALT
+3  PD
+3  Q
+3  RHO
+3  UET
+3  UES
+3  VNT
+3  VNS
+3  WTT
+3  WTS
+3  KAPPA_ISOP
+3  KAPPA_THIC
+3  HOR_DIFF
+3  PV
+3  KVMIX
+3  TPOWER
+3  DIA_DEPTH
+3  TLT
+3  INT_DEPTH
+1  SST
+3  SST2
+3  VDC_T
+3  VDC_S
+3  UVEL2
+3  VVEL2
+3  WVEL2
+3   RHO_VINT
+3  SFWF_WRST
+3  TAUX2
+3  TAUY2
+3  SSH2
+3  VVC
+3  VDC_BCK
+3  VVC_BCK
+3  KVMIX_M
+3  SALT_MAX
+3  SALT_MIN
+3  TEMP_MAX
+3  TEMP_MIN
+3  QSW_3D
+3  TEMP2
+3  HMXL_DR2
+1  SSS
+
+
+
+
+
+
+

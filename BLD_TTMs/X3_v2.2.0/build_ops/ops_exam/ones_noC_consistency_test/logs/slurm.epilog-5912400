@@ -1,0 +1,13 @@
+-------------- slurm.epilog ---------------
+Job ID:    5912400
+User:      abardin
+Group:     primeau
+Job Name:  C14
+Partition: m-c2.2
+QOS:       normal 
+Account:   primeau
+Reason:    None,c-9-31
+Nodelist:  c-9-31
+Command:   /nfspool-0/home/abardin/X3_v2.2.0/tracers/C14/solve_noC/solveC14.slurm
+WorkDir:   /nfspool-0/home/abardin/X3_v2.2.0/tracers/C14/solve_noC
+BatchHost: c-9-31

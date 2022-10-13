@@ -1,0 +1,7 @@
+./xmlchange POP_PASSIVE_TRACER_RESTART_OVERRIDE="none"
+./xmlchange STOP_OPTION=nyears
+./xmlchange STOP_N=100
+./xmlchange REST_OPTION=nyears
+./xmlchange REST_N=100
+./xmlchange CONTINUE_RUN=TRUE
+

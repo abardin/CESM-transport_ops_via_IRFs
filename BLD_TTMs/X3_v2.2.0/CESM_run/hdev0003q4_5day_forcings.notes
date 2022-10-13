@@ -1,0 +1,147 @@
+## branch run hdev0003q4 X3 v2.2.0 generate forcings output from 4051 10 years
+## (1969 - 1998) on a 5-day basis.
+## includes mods for Fe input
+## adds TAVG_R8 = TRUE (for output)
+## short output list for forcings
+## cp tavg mods to SourceMods/src.pop BEFORE setup build
+
+/bin/tcsh
+module load intel/2018.3 openmpi/3.1.6 netcdf/4.7.0 pnetcdf/1.10.0 idl
+module list
+
+setenv MYCASE hdev0003q4
+setenv PROJECT moore
+setenv RUN_REFDATE 4051-01-01
+setenv RUN_REFCASE /DFS-L/SCRATCH/moore/abardin/archive/hdev0003/rest/${RUN_REFDATE}-00000/
+ 
+cd /DFS-L/DATA/moore/jkmoore/cesm2.2.0/cime/scripts/
+./create_newcase --compset G1850ECOIAF --res T62_g37 --case /DFS-L/SCRATCH/moore/abardin/cesm2.2.0_runs/{$MYCASE} --mach greenplanet-sky24 --run-unsupported
+
+cd /DFS-L/SCRATCH/moore/abardin/cesm2.2.0_runs/{$MYCASE}/
+
+# fix for branch v2.2.0
+ pushd ${RUN_REFCASE}
+ cp *.cice.r.${RUN_REFDATE}-00000.nc .cice.r.${RUN_REFDATE}-00000.nc
+ cp *.ww3.r.${RUN_REFDATE}-00000 .ww3.r.${RUN_REFDATE}-00000
+ popd
+
+#prestage IC (initial conditions) to RUNDIR for branch
+ setenv RUNDIR `./xmlquery --value -s RUNDIR`
+ if ! (-d $RUNDIR) mkdir -p $RUNDIR
+ pushd $RUNDIR
+ cp ${RUN_REFCASE}* ./
+ popd
+
+
+## ck OCN_TRACER_MODULES = iage ecosys 
+./xmlquery OCN_TRACER_MODULES
+
+./xmlchange POP_TAVG_R8="TRUE"
+./xmlchange NTASKS_OCN=80,ROOTPE_OCN=40,ROOTPE_ICE=0 
+
+
+## manually copy and/or edit user_nl_pop, user_nl_cice, and user_nl_marbl.... 
+cp ~/X3_v2.2.0/CESM_run/KM_mods/user_nl_* ./
+
+## cp user_nl_pop_forcings to user_nl_pop, modified to not do some diagnostic
+## output; plus  delete tavg_nml mods of nyear: default is nmonth.
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/user_nl_pop_forcings ./user_nl_pop
+
+## copy gx3v7_tavg_contents_forcings to /SourceMods/src.pop for short output
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/gx3v7_tavg_contents_forcings ./SourceMods/src.pop/gx3v7_tavg_contents
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/ecosys_tavg_contents_forcings ./SourceMods/src.pop/ecosys_tavg_contents
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/ecosys_diagnostics_forcings ./SourceMods/src.pop/ecosys_diagnostics
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/gm_bolus_terms_tavg_contents_forcings ./SourceMods/src.pop/gm_bolus_terms_tavg_contents
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/mcog_tavg_contents_forcings ./SourceMods/src.pop/mcog_tavg_contents
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/submeso_terms_tavg_contents_forcings ./SourceMods/src.pop/submeso_terms_tavg_contents
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/vmix_tavg_contents_forcings ./SourceMods/src.pop/vmix_tavg_contents
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/iage_tavg_contents_forcings ./SourceMods/src.pop/iage_tavg_contents
+
+./case.setup
+./xmlchange OCN_BGC_CONFIG=latest
+
+## runtime settings for branch
+ ./xmlchange RUN_TYPE=branch
+ ./xmlchange RUN_REFCASE=$RUN_REFCASE
+ ./xmlchange RUN_REFDATE=$RUN_REFDATE
+ ./xmlchange GET_REFCASE=FALSE
+
+## add account=moore to batch directives in env_batch.xml
+##  <directive> --account=moore                    </directive> 
+
+srun --pty --x11 -t 24:00:00 -n 1 --mem=30GB --account=moore -p sky2.4 bash -i
+/bin/tcsh
+
+module load intel/2018.3 openmpi/3.1.6 netcdf/4.7.0 pnetcdf/1.10.0 idl
+module list
+./case.build --clean
+./case.build --skip-provenance-check
+
+## AFTER build, cp edited gx3v7_tavg_c into Buildconf/popconf
+#pushd Buildconf/popconf/
+#cp ~/X3_v2.2.0/CESM_run/MARBL_mods/gx3v7_tavg_contents_forcings_BUILT ./gx3v7_tavg_contents
+#popd 
+
+./xmlchange JOB_WALLCLOCK_TIME=168:00:00 
+./xmlchange STOP_OPTION=nyears
+./xmlchange STOP_N=10
+./xmlchange REST_OPTION=nyears
+./xmlchange REST_N=10
+./xmlchange RESUBMIT=0 
+./xmlchange DOUT_S=TRUE
+./xmlchange COMP_RUN_BARRIERS=FALSE
+##./xmlchange CONTINUE_RUN=FALSE ## set by branch
+
+# setup for 5-day output of IRFs and data
+pushd SourceMods/src.pop/
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/ocn.base.tavg.csh_5day ./ocn.base.tavg.csh
+cp ~/X3_v2.2.0/CESM_run/MARBL_mods/ocn.ecosys.tavg.csh_5day ./ocn.ecosys.tavg.csh
+popd
+
+##replaced:
+cp /DFS-L/DATA/moore/jkmoore/cesm2.2.0/components/pop/input_templates/ocn.base.tavg.csh ./
+cp /DFS-L/DATA/moore/jkmoore/cesm2.2.0/components/pop/input_templates/ocn.ecosys.tavg.csh .
+
+# edit tavg values to get desired output rates
+# for 5-day averages: 
+#ocn.base.tavg.csh
+# change:
+# to
+tavg_freq_opt           = 'nday'     'nyear'  'once' 
+tavg_freq               =     5         1       1   
+tavg_stream_filestrings = 'nday1'    'nyear1' 'once' 
+tavg_file_freq_opt      = 'nday'     'nyear'  'once' 
+tavg_file_freq          =     5         1       1    
+tavg_start_opt          = 'nstep'    'nstep'  'nstep'
+tavg_start              =     0         0       0    
+tavg_fmt_in             = 'nc'       'nc'      'nc' 
+tavg_fmt_out            = 'nc'       'nc'      'nc' 
+ltavg_has_offset_date   = .true.     .false.  .false.
+tavg_offset_years       =     1         1       1    
+tavg_offset_months      =     1         1       1    
+tavg_offset_days        =     1         2       2    
+ltavg_one_time_header   = .false.    .false.  .false.
+
+#ocn.ecosys.tavg.csh
+# change
+# to
+tavg_freq_opt             = 'nday'   'nyear'
+tavg_freq                 =  5       1
+tavg_file_freq_opt        = 'nday' 'nyear'
+tavg_file_freq            =  5       1
+tavg_start_opt            = 'nstep'  'nstep'
+tavg_start                =  0       0
+tavg_fmt_in               = 'nc'     'nc'
+tavg_fmt_out              = 'nc'     'nc'
+ltavg_has_offset_date     = .true.  .false.
+tavg_offset_years         =  1       1
+tavg_offset_months        =  1       1
+tavg_offset_days          =  1       2
+ltavg_one_time_header     = .false.  .false.
+tavg_stream_filestrings   = 'ecosys.nday1' 'ecosys.nyear1'
+
+popd
+##
+./case.submit
+exit
+exit

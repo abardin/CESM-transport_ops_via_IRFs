@@ -1,0 +1,163 @@
+
+Currently Loaded Modules:
+  1) matlab/R2020b
+
+ 
+
+
+                                                                              < M A T L A B (R) >
+                                                                    Copyright 1984-2020 The MathWorks, Inc.
+                                                                R2020b Update 5 (9.9.0.1592791) 64-bit (glnxa64)
+                                                                                February 4, 2021
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> 
+>> 
+>> >> 
+F = 
+
+  struct with fields:
+
+      casename: '0003i4051'
+        nyears: 10
+       firstyr: 4051
+       ops_dir: '/DFS-L/SCRATCH/moore/abardin/X3v2.2.0_ops/yr4051i/X3_10yr_4051i/'
+       out_dir: '/DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/'
+    Pfile_name: '/DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/Pfile.mat'
+
+>> 
+P = 
+
+  struct with fields:
+
+       case_name: '0003i4051'
+          nyears: 10
+           fyear: 4051
+      Pfile_name: '/DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/Pfile.mat'
+         ops_dir: '/DFS-L/SCRATCH/moore/abardin/X3v2.2.0_ops/yr4051i/X3_10yr_4051i/'
+         out_dir: '/DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/'
+           runno: 104051
+      prec_grain: 2
+            spyr: 31536000
+             lam: 3.8359e-12
+             tau: 63072000
+       do_graphs: 0
+    timestep_hrs: 3
+    first_period: 1
+     period_span: 1
+     last_period: 12
+      numPeriods: 12
+
+GLOBAL begin  min C14 = 0.758 max C14 = 0.967
+Factoring the preconditioner... Elapsed time is 23.997485 seconds.
+one year seasonal cycle, iter 0
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it1_r104051.mat c r r1 
+one year seasonal cycle, iter 1
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it2_r104051.mat c r r1 
+one year seasonal cycle, iter 2
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it3_r104051.mat c r r1 
+one year seasonal cycle, iter 3
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it4_r104051.mat c r r1 
+one year seasonal cycle, iter 4
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it5_r104051.mat c r r1 
+one year seasonal cycle, iter 5
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it6_r104051.mat c r r1 
+one year seasonal cycle, iter 6
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it7_r104051.mat c r r1 
+one year seasonal cycle, iter 7
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it8_r104051.mat c r r1 
+one year seasonal cycle, iter 8
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it9_r104051.mat c r r1 
+one year seasonal cycle, iter 9
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it10_r104051.mat c r r1 
+one year seasonal cycle, iter 10
+1 year cycle took 70 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it11_r104051.mat c r r1 
+one year seasonal cycle, iter 11
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it12_r104051.mat c r r1 
+one year seasonal cycle, iter 12
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it13_r104051.mat c r r1 
+one year seasonal cycle, iter 13
+1 year cycle took 70 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it14_r104051.mat c r r1 
+one year seasonal cycle, iter 14
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it15_r104051.mat c r r1 
+one year seasonal cycle, iter 15
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it16_r104051.mat c r r1 
+one year seasonal cycle, iter 16
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it17_r104051.mat c r r1 
+one year seasonal cycle, iter 17
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it18_r104051.mat c r r1 
+one year seasonal cycle, iter 18
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it19_r104051.mat c r r1 
+one year seasonal cycle, iter 19
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it20_r104051.mat c r r1 
+one year seasonal cycle, iter 20
+1 year cycle took 71 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it21_r104051.mat c r r1 
+one year seasonal cycle, iter 21
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it22_r104051.mat c r r1 
+one year seasonal cycle, iter 22
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it23_r104051.mat c r r1 
+one year seasonal cycle, iter 23
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it24_r104051.mat c r r1 
+one year seasonal cycle, iter 24
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it25_r104051.mat c r r1 
+one year seasonal cycle, iter 25
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it26_r104051.mat c r r1 
+one year seasonal cycle, iter 26
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it27_r104051.mat c r r1 
+one year seasonal cycle, iter 27
+1 year cycle took 71 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it28_r104051.mat c r r1 
+one year seasonal cycle, iter 28
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it29_r104051.mat c r r1 
+one year seasonal cycle, iter 29
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it30_r104051.mat c r r1 
+one year seasonal cycle, iter 30
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it31_r104051.mat c r r1 
+one year seasonal cycle, iter 31
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it32_r104051.mat c r r1 
+one year seasonal cycle, iter 32
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it33_r104051.mat c r r1 
+one year seasonal cycle, iter 33
+1 year cycle took 69 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it34_r104051.mat c r r1 
+one year seasonal cycle, iter 34
+1 year cycle took 68 minutes
+save /DFS-L/SCRATCH/moore/abardin/C14/0003i4051/n10_yr4051d/it35_r104051.mat c r r1 
+nsoli found a solution
+done running seasonal equilibrium solution for C14
+>> >> 

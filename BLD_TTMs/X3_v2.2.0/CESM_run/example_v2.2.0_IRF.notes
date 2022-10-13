@@ -1,0 +1,83 @@
+## branch run hdev0003k X3 v2.2.0 generate IRFs from 1201 years for 10 years
+## includes KM'smods for Fe input
+
+/bin/tcsh
+module load intel/2018.3 openmpi/3.1.6 netcdf/4.7.0 pnetcdf/1.10.0 idl
+module list
+
+setenv PROJECT moore
+setenv MYCASE hdev0003k
+setenv RUN_REFDATE 1201-01-01
+setenv RUN_REFCASE /DFS-L/SCRATCH/moore/abardin/archive/hdev0003/rest/${RUN_REFDATE}-00000/
+ 
+cd /DFS-L/DATA/moore/jkmoore/cesm2.2.0/cime/scripts/
+./create_newcase --compset G1850ECOIAF  --res T62_g37 --case /DFS-L/SCRATCH/moore/abardin/cesm2.2.0_runs/${MYCASE} --mach greenplanet-sky24 --run-unsupported
+
+cd /DFS-L/SCRATCH/moore/abardin/cesm2.2.0_runs/${MYCASE}/
+
+# fix for branch v2.2.0
+ pushd ${RUN_REFCASE}
+ cp *.cice.r.${RUN_REFDATE}-00000.nc .cice.r.${RUN_REFDATE}-00000.nc
+ cp *.ww3.r.${RUN_REFDATE}-00000 .ww3.r.${RUN_REFDATE}-00000 
+ popd
+
+#prestage IC (initial conditions) to RUNDIR for branch
+ setenv RUNDIR `./xmlquery --value -s RUNDIR`
+ if ! (-d $RUNDIR) mkdir -p $RUNDIR
+ pushd $RUNDIR
+ cp ${RUN_REFCASE}* ./
+ popd
+
+## modify OCN_TRACER_MODULES = iage ecosys IRF
+./xmlchange OCN_TRACER_MODULES="iage ecosys IRF"
+./xmlchange OCN_TRACER_MODULES_OPT="IRF_MODE=offline_transport"
+./xmlchange POP_TAVG_R8="TRUE"
+
+./case.setup
+./xmlchange OCN_BGC_CONFIG=latest
+
+## runtime settings for branch
+ ./xmlchange RUN_TYPE=branch
+ ./xmlchange RUN_REFCASE=$RUN_REFCASE
+ ./xmlchange RUN_REFDATE=$RUN_REFDATE
+ ./xmlchange GET_REFCASE=FALSE
+
+## manually copy and/or edit user_nl_pop, user_nl_cice, and user_nl_marbl.... 
+cp /nfspool-0/home/abardin/X3_v2.2.0/CESM_run/KM_mods/user_nl_* ./
+
+# manually edit user_nl_pop to delete tavg_nml mods of nyear: default is nmonth 
+
+# read IRF tracers from 64bit netCDF3 version of file, as opposed to 
+# netCDF4 w/ compression enabled - this enables usage of PIO_TYPENAME=pnetcdf
+# Only need to do this one time for a new configuration.
+# ncks -O --fl_fmt=64bit /nfspool-0/home/abardin/X3_v2.2.0/CESM_run/IRF_mods/IRF#_offline_transport_tracers_gx3v7_20150313.nc /nfspool-0/home/abardin/X3_v2.2.0/#CESM_run/IRF_mods/IRF_offline_transport_tracers_gx3v7_20150314.nc
+
+cat >> user_nl_pop << EOF
+irf_tracer_file = '/nfspool-0/home/abardin/X3_v2.2.0/CESM_run/IRF_mods/IRF_offline_transport_tracers_gx3v7_20150314.nc'
+EOF
+
+srun --pty --x11 -t 24:00:00 -n 1 --mem=30GB --account=moore -p sky2.4 bash -i
+/bin/tcsh
+module load intel/2018.3 openmpi/3.1.6 netcdf/4.7.0 pnetcdf/1.10.0 idl
+module list
+./case.build --skip-provenance-check
+
+## manually copy and/or edit ecosys_tavg_contents to /Buildconf/popconf
+cp /DFS-L/SCRATCH/moore/jkmoore/cesm2_runs/hdev0002/Buildconf/popconf/ecosys_tavg_contents /DFS-L/SCRATCH/moore/abardin/cesm2.2.0_runs/${MYCASE}/Buildconf/popconf/
+
+## add account=moore to batch directives in env_batch.xml
+##  <directive> --account=moore                    </directive>
+
+./xmlchange JOB_WALLCLOCK_TIME=168:00:00 
+./xmlchange STOP_OPTION=nyears
+./xmlchange STOP_N=11
+./xmlchange REST_OPTION=never
+./xmlchange REST_N=11
+./xmlchange RESUBMIT=0 
+./xmlchange DOUT_S=TRUE
+./xmlchange COMP_RUN_BARRIERS=FALSE
+./xmlchange CONTINUE_RUN=FALSE
+
+./case.submit
+exit
+exit
